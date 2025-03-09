@@ -25,14 +25,17 @@ def gemini():
     print(response['choices'][0]['message']['content'])
 
 def gemini1():
-    response = completion(
-        model="gemini/gemini-2.0-flash-exp",
-        api_key = api_key,
-        messages=[{ "content": "Write a poem about python?","role": "user"}],
+    try:
+        response = completion(
+#Wrote wrong model name "openai/gemini-2.0-flash-exp",
+# instead of "gemini/gemini-2.0-flash-exp" to check try except method
+            model="openai/gemini-2.0-flash-exp",
+            api_key = api_key,
+            messages=[{ "content": "Write a poem about python?","role": "user"}],
+            stream = True,
+        )
+        for part in response:
+            print(part['choices'][0]['delta'].get('content', ''), end= '')
+    except Exception as e:
+        print("An error occurred")
 
-#To get the response in streaming, we use stream as True        
-        stream = True,
-)
-#For making the streaming true, we apply a for loop and use below code to get a refined response.    
-    for part in response:
-        print(part['choices'][0]['delta'].get('content', ''), end= '')
