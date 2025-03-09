@@ -24,3 +24,15 @@ def gemini():
 #To get a refined response, we use below line code    
     print(response['choices'][0]['message']['content'])
 
+def gemini1():
+    response = completion(
+        model="gemini/gemini-2.0-flash-exp",
+        api_key = api_key,
+        messages=[{ "content": "Write a poem about python?","role": "user"}],
+
+#To get the response in streaming, we use stream as True        
+        stream = True,
+)
+#For making the streaming true, we apply a for loop and use below code to get a refined response.    
+    for part in response:
+        print(part['choices'][0]['delta'].get('content', ''), end= '')
